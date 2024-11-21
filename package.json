@@ -1,7 +1,7 @@
 {
   "name": "@safeblock/ethers-utils",
   "version": "0.0.0",
-  "description": "Set of small utils for ethers v6",
+  "description": "A lightweight utility library for enhanced interactions with Ethereum and EVM-compatible networks",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
