@@ -24,8 +24,8 @@ class StaticAddress {
     return String(valueA).toLowerCase() === String(valueB).toLowerCase()
   }
 
-  public static inArray(address: string, array: string[]) {
-    return array.map(i => i.toLowerCase()).includes(address.toLowerCase())
+  public static inArray(address: Address | string, array: (string | Address)[]) {
+    return array.map(i => i.toString().toLowerCase()).includes(address.toString().toLowerCase())
   }
 
   public static lt(valueA: unknown, valueB: unknown) {
@@ -50,7 +50,7 @@ class StaticAddress {
     return StaticAddress.equal(valueA, valueB) || StaticAddress.gt(valueA, valueB)
   }
 
-  public static from(addressLike: string) {
+  public static from(addressLike: string | Address) {
     return new Address(addressLike)
   }
 }
@@ -60,10 +60,10 @@ export default class Address extends StaticAddress {
 
   private readonly _address: string = Address.zeroAddress
 
-  constructor(addressLike: string) {
+  constructor(addressLike: string | Address) {
     super()
 
-    if (Address.isAddressLike(addressLike)) this._address = addressLike.toLowerCase()
+    if (Address.isAddressLike(addressLike)) this._address = addressLike.toString().toLowerCase()
   }
 
   public isAddressLike(value: unknown) {
@@ -74,7 +74,7 @@ export default class Address extends StaticAddress {
     return StaticAddress.equal(this._address, value)
   }
 
-  public inArray(array: string[]) {
+  public inArray(array: (string | Address)[]) {
     return StaticAddress.inArray(this._address, array)
   }
 
