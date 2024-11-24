@@ -59,18 +59,19 @@ function createFallbackProvider(network: Network) {
   if (!publicNetworkProviders) throw new Error("Unsupported network: " + network.name)
 
   // Insert a private node if configured
-  const privateNode = String(
-    (import.meta as any)?.env?.[`EUTILS_ETHERS_PROVIDERS_NODE_${ network.name.toUpperCase() }`] ?? ""
-  )
+  //const privateNode = String(
+  //  (import.meta as any)?.env?.[`EUTILS_ETHERS_PROVIDERS_NODE_${ network.name.toUpperCase() }`] ?? ""
+  //)
 
-  const networkProviders = [privateNode, ...publicNetworkProviders]
+  const networkProviders = [...publicNetworkProviders]
     .filter(providerUrl => providerUrl.length > 0)
 
   // Create the fallback provider
   return new FallbackProvider(networkProviders.map((providerUrl, index) => ({
     provider: new JsonRpcProvider(providerUrl, network.chainId, { staticNetwork: network }),
     priority: index + 1,
-    weight: privateNode && index === 0 ? 2 : 1
+    //weight: privateNode && index === 0 ? 2 : 1
+    weight: 1
   })))
 }
 
