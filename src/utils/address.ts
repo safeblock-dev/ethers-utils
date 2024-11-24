@@ -1,3 +1,5 @@
+import { getAddress } from "ethers"
+
 class StaticAddress {
   public static isAddressLike(value: unknown) {
     if (
@@ -8,6 +10,10 @@ class StaticAddress {
 
     if (String(value).length !== 42) return false
     return String(value).slice(0, 2).toLowerCase() === "0x"
+  }
+
+  public static isZero(value: unknown) {
+    return StaticAddress.equal(value, Address.zeroAddress)
   }
 
   public static equal(valueA: unknown, valueB: unknown) {
@@ -42,6 +48,10 @@ class StaticAddress {
 
   public static gte(valueA: unknown, valueB: unknown) {
     return StaticAddress.equal(valueA, valueB) || StaticAddress.gt(valueA, valueB)
+  }
+
+  public static from(addressLike: string) {
+    return new Address(addressLike)
   }
 }
 
@@ -82,5 +92,13 @@ export default class Address extends StaticAddress {
 
   public gte(value: unknown) {
     return StaticAddress.gte(this._address, value)
+  }
+
+  public isZero() {
+    return StaticAddress.isZero(this._address)
+  }
+
+  public toString() {
+    return getAddress(this._address.toString())
   }
 }
